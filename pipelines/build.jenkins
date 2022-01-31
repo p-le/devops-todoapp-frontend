@@ -14,7 +14,7 @@ podTemplate(label: POD_LABEL, containers: [
     )
 ], volumes: [
     configMapVolume(configMapName: 'artifact-config', mountPath: '/kaniko/.docker'),
-    secretVolume(secretName: 'gcp-credentials', mountPath: '/kaniko/credentials')
+    secretVolume(secretName: 'kaniko-gcp-credentials', mountPath: '/kaniko/credentials')
 ]) {
     node(POD_LABEL) {
         stage('Clone Repository') {
