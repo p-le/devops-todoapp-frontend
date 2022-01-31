@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start": "REACT_APP_API_ENDPOINT=http://localhost:8080 react-scripts start",
-    "build": "react-scripts build",
+    "build": "REACT_APP_API_ENDPOINT=http://localhost:8080 react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
