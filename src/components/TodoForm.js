@@ -18,6 +18,7 @@ function TodoForm(props) {
 
     props.onSubmit({
       id: Math.floor(Math.random() * 10000),
+      status: true,
       title: title
     });
     setTitle('');

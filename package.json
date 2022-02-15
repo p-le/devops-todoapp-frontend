@@ -1,6 +1,6 @@
 {
   "name": "todoapp",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
@@ -13,8 +13,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "REACT_APP_API_ENDPOINT=http://localhost:8080 react-scripts start",
-    "build": "REACT_APP_API_ENDPOINT=http://todoapp-backend-service react-scripts build",
+    "start": "REACT_APP_API_ENDPOINT=http://localhost:8080/apis react-scripts start",
+    "build": "REACT_APP_API_ENDPOINT=http://34.111.27.93/apis react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

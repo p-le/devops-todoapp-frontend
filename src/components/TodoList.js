@@ -24,6 +24,7 @@ function TodoList() {
   };
 
   const addTodo = todo => {
+    console.log(todo)
     if (!todo.title || /^\s*$/.test(todo.title)) {
       return;
     }
@@ -122,7 +123,7 @@ function TodoList() {
         removeTodo={removeTodo}
         updateTodo={updateTodo}
       />
-      {isError && <div>Error fetching data.</div>}
+      {isError && <div className='warning'>Error fetching data.</div>}
     </>
   );
 }

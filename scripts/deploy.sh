@@ -2,7 +2,7 @@
 set -x
 
 IMAGE_NAME="todoapp-frontend"
-IMAGE_TAG="1.0.3"
+IMAGE_TAG="1.0.4"
 GCP_PROJECT_ID="phu-le-it"
 GCP_REGION="asia-northeast1"
 GCP_IMAGE_REPOSITORY="todoapp-repository"
