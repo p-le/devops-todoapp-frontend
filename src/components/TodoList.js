@@ -24,7 +24,6 @@ function TodoList() {
   };
 
   const addTodo = todo => {
-    console.log(todo)
     if (!todo.title || /^\s*$/.test(todo.title)) {
       return;
     }
