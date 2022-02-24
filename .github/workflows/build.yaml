@@ -5,7 +5,7 @@ on:
       - 'v*.*.*'
 env:
   GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT }}
-  IMAGE_FULL_NAME: ${{ secrets.GCP_ARTIFACT_REGISTRY_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_ARTIFACT_REGISTRY_ID }}/todoapp-frontend
+  IMAGE_FULL_NAME: ${{ secrets.GCP_ARTIFACT_REGISTRY_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_ARTIFACT_REGISTRY_ID }}/todoapp-frontend:${{github.ref_name}}
 
 jobs:
   setup-build-publish:
@@ -39,3 +39,39 @@ jobs:
 
     - name: Publisher Container Image
       run: docker push ${{ env.IMAGE_FULL_NAME }}
+
+
+  update-manifest:
+    needs: setup-build-publish
+    name: Update K8S Manifests
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        repository: p-le/devops-todoapp-manifests
+
+   - name: Set up Kustomize
+      run: |-
+        curl -sfLo kustomize https://github.com/kubernetes-sigs/kustomize/releases/download/v3.1.0/kustomize_3.1.0_linux_amd64
+        chmod u+x ./kustomize
+
+    - name: Update Image
+      run: |-
+        kustomize edit set image "todoapp-frontend=${{ env.IMAGE_FULL_NAME }}"
+
+    - name: Create Pull Request
+      id: create-pull-request
+      uses: peter-evans/create-pull-request@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: Update Manifest Files ${{ github.run_id }}
+        committer: GitHub <noreply@github.com>
+        author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+        branch: update/manifest-files-${{ github.run_id }}
+        delete-branch: true
+        title: 'Update Manifest Files | Automated PR'
+        labels: |
+          automated-pr
+        draft: false
