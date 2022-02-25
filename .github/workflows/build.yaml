@@ -37,7 +37,7 @@ jobs:
 
     - name: Build Container Image
       run: |
-        echo "REACT_APP_API_ENDPOINT=${{ secrets.PUBLIC_IP_ADDRESS }}" > .env.production
+        echo "REACT_APP_API_ENDPOINT=http://${{ secrets.PUBLIC_IP_ADDRESS }}/apis" > .env.production
         docker build -t ${{ env.IMAGE_FULL_NAME }} .
 
     - name: Publisher Container Image
