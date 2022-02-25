@@ -74,9 +74,11 @@ jobs:
         delete-branch: true
         body: |
           Update Frontend Container Image
-          - Version: ${{github.ref_name}}
-          - Build: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-        title: 'Update Frontend Image | Automated PR'
+          - New Image Tag: ${{github.ref_name}}
+          - Build: [Click Here][1]
+
+          [1]: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        title: 'Update Frontend Image ${{github.ref_name}}'
         labels: |
           automated-pr
         draft: false
