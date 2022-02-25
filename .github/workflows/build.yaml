@@ -6,6 +6,7 @@ on:
 env:
   GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT }}
   IMAGE_FULL_NAME: ${{ secrets.GCP_ARTIFACT_REGISTRY_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT }}/${{ secrets.GCP_ARTIFACT_REGISTRY_ID }}/todoapp-frontend:${{github.ref_name}}
+  MANIFEST_REPOSITORY: p-le/devops-todoapp-manifests
 
 jobs:
   setup-build-publish:
@@ -50,7 +51,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
       with:
-        repository: p-le/devops-todoapp-manifests
+        repository: ${{ env.MANIFEST_REPOSITORY }}
 
     - name: Set up Kustomize
       run: |-
@@ -66,12 +67,16 @@ jobs:
       uses: peter-evans/create-pull-request@v3
       with:
         token: ${{ secrets.PAT }}
-        commit-message: Update Manifest Files ${{ github.run_id }} | Auto-Commit
+        commit-message: "Update Frontend Image ${{github.ref_name}} | Auto-Commit"
         committer: GitHub <noreply@github.com>
         author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
         branch: update/manifest-files-${{ github.run_id }}
         delete-branch: true
-        title: 'Update Manifest Files | Automated PR'
+        body: |
+          Update Frontend Container Image
+          - Version: ${{github.ref_name}}
+          - Build: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        title: 'Update Frontend Image | Automated PR'
         labels: |
           automated-pr
         draft: false
