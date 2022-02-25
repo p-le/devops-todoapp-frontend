@@ -65,8 +65,8 @@ jobs:
       id: create-pull-request
       uses: peter-evans/create-pull-request@v3
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        commit-message: Update Manifest Files ${{ github.run_id }}
+        token: ${{ secrets.PAT }}
+        commit-message: Update Manifest Files ${{ github.run_id }} | Auto-Commit
         committer: GitHub <noreply@github.com>
         author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
         branch: update/manifest-files-${{ github.run_id }}
