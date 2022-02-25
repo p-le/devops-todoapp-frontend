@@ -36,7 +36,9 @@ jobs:
       run: gcloud auth configure-docker ${{ secrets.GCP_ARTIFACT_REGISTRY_LOCATION }}-docker.pkg.dev
 
     - name: Build Container Image
-      run: docker build -t ${{ env.IMAGE_FULL_NAME }} .
+      run: |
+        echo "REACT_APP_API_ENDPOINT=${{ env.PUBLIC_IP_ADDRESS }}" > .env.production
+        docker build -t ${{ env.IMAGE_FULL_NAME }} .
 
     - name: Publisher Container Image
       run: docker push ${{ env.IMAGE_FULL_NAME }}
