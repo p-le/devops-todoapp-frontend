@@ -70,7 +70,7 @@ jobs:
         commit-message: "Update Frontend Image ${{github.ref_name}} | Auto-Commit"
         committer: GitHub <noreply@github.com>
         author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-        branch: update/manifest-files-${{ github.run_id }}
+        branch: update/frontend-image-${{github.ref_name}}
         delete-branch: true
         body: |
           Update Frontend Container Image
